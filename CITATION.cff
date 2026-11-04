@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this research prototype, please cite it using this metadata."
+type: software
+title: "Magnolia: Plant detection and quantification"
+authors:
+  - family-names: Manjunatha
+    given-names: Harshita
+abstract: >-
+  A browser-based research prototype for detecting and quantifying plants in
+  overhead nursery imagery using a fine-tuned YOLO11n model, ONNX inference,
+  inspectable bounding boxes, and downloadable results.
+repository-code: "https://github.com/harshitha-8/magnolia_Quantification"
+url: "https://harshitha-8.github.io/magnolia_Quantification/"
+keywords:
+  - computer vision
+  - plant detection
+  - Magnolia
+  - object detection
+  - ONNX
+  - research prototype

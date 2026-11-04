@@ -20,13 +20,21 @@ async function init(){
 function draw(){
   ctx.drawImage(image,0,0,canvas.width,canvas.height);
   const scale=canvas.width/image.naturalWidth;
-  ctx.lineWidth=Math.max(2,canvas.width/650);ctx.font=`600 ${Math.max(12,canvas.width/65)}px system-ui`;
+  const reference=isReference();
+  ctx.lineWidth=Math.max(1.5,canvas.width/700);ctx.font=`600 ${Math.max(12,canvas.width/80)}px system-ui`;
   boxes.forEach((b,i)=>{
     const x=b.x1*scale,y=b.y1*scale,w=(b.x2-b.x1)*scale,h=(b.y2-b.y1)*scale;
-    ctx.strokeStyle='#bcff72';ctx.strokeRect(x,y,w,h);
-    const text=String(i+1),tw=ctx.measureText(text).width+10,th=Math.max(19,canvas.width/45);
+    ctx.fillStyle=reference?'rgba(242,207,155,0.055)':'rgba(181,241,207,0.055)';ctx.fillRect(x,y,w,h);
+    ctx.strokeStyle=reference?'#f2cf9b':'#b5f1cf';ctx.strokeRect(x,y,w,h);
+    const corner=Math.min(11,w/3,h/3);
+    ctx.beginPath();
+    for(const [px,py,dx,dy] of [[x,y,1,1],[x+w,y,-1,1],[x,y+h,1,-1],[x+w,y+h,-1,-1]]){
+      ctx.moveTo(px+dx*corner,py);ctx.lineTo(px,py);ctx.lineTo(px,py+dy*corner);
+    }
+    ctx.stroke();
+    const text=String(i+1).padStart(2,'0'),tw=ctx.measureText(text).width+12,th=Math.max(20,canvas.width/50);
     const labelX=Math.min(x,canvas.width-tw),labelY=Math.max(th,y);
-    ctx.fillStyle='#143e2c';ctx.fillRect(labelX,labelY-th,tw,th);ctx.fillStyle='#fff';ctx.fillText(text,labelX+5,labelY-5);
+    ctx.fillStyle='#102720';ctx.fillRect(labelX,labelY-th,tw,th);ctx.fillStyle=reference?'#f2cf9b':'#d9f5e5';ctx.fillText(text,labelX+6,labelY-5);
   });
 }
 async function loadImage(source,name,reference=null,kind=null){

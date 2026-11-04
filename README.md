@@ -1,8 +1,22 @@
-# Magnolia detector & quantification
+# Magnolia · Plant detection & quantification
 
-A working browser prototype that detects and counts individual Magnolia plants in overhead nursery photographs. It follows the [Mildew Detector](https://github.com/samvadajainm/mildew-detector) deployment pattern: a static page and ONNX model, hosted by GitHub Pages and embeddable in Google Sites.
+**A computer vision research prototype developed by Harshita Manjunatha.**
 
-**App:** https://harshitha-8.github.io/magnolia_Quantification/
+Plant counting. A clearer perspective.
+
+Magnolia turns overhead nursery imagery into inspectable plant detections, instance counts, and bounding-box coverage. A compact YOLO11n model runs directly in the browser through ONNX Runtime, keeping visitor images on their own devices. The interface pairs a field-inspired visual identity with numbered boxes, traceable result sources, and exportable data.
+
+**[Open the research prototype](https://harshitha-8.github.io/magnolia_Quantification/)** · **[Deployment & Google Sites](DEPLOYMENT.md)** · **[Evaluation](reports/evaluation.json)**
+
+**Research prototype · Computer vision · On-device inference · Open workflow**
+
+This is experimental research software with measured limitations. Model predictions and provided reference annotations are explicitly distinguished throughout the interface and exports.
+
+## Project description
+
+> Magnolia is a browser-based research prototype for detecting and quantifying plants in overhead nursery imagery. Developed by Harshita Manjunatha, it combines a fine-tuned YOLO11n model with ONNX inference, visual inspection, bounding-box coverage, and downloadable results.
+
+The static deployment follows the [Mildew Detector](https://github.com/samvadajainm/mildew-detector) pattern: a page and ONNX model hosted by GitHub Pages and embeddable in Google Sites.
 
 Upload a JPEG/PNG/WebP or choose the held-out example, then select **Count Magnolia plants**. Adjust the confidence threshold to review detections. Download CSV, JSON, or the annotated image. Photos stay in browser memory; no inference server or API key is required.
 
@@ -11,7 +25,7 @@ Upload a JPEG/PNG/WebP or choose the held-out example, then select **Count Magno
 Use **https://harshitha-8.github.io/magnolia_Quantification/**, not a previous `127.0.0.1` preview tab. The permanent GitHub Pages app works without a local Python server. A localhost tab works only while its local preview server is running.
 
 1. Choose a local JPEG, PNG, or WebP, or select the held-out example. Wait for the model-ready message, then choose **Count Magnolia plants**.
-2. Boxes show plant numbers only. Numbers such as the old `3 · 82%` meant plant 3 with a model score of 82%; they were not plant measurements. Confidence percentages have been removed from the boxes and the main metrics.
+2. Boxes show plant numbers only. Mint boxes identify model predictions; warm gold boxes identify supplied reference annotations. Confidence percentages do not appear beside the boxes or in the main metrics.
 3. **Advanced detection settings** contains the optional confidence filter. Lower values include weaker candidates; higher values suppress them. It changes results immediately after inference. The threshold is not an accuracy percentage, and raising it to 100% would usually hide every detection.
 4. For an exact supplied image or a prepared recovered crop, the **Supplied annotations (reference)** option becomes available. It displays every provided box in the recoverable region. The metric **Annotations displayed: 100%** means all those annotation boxes are visible. It is not model confidence, model accuracy, or proof that the annotation itself is exhaustive. It does not represent automatic detection.
 5. CSV and JSON exports explicitly identify `model_predictions` or `provided_annotations`. Reference boxes have no fabricated confidence scores.
@@ -113,3 +127,14 @@ This uses ONNX Runtime on CPU. It writes per-image JSON and annotated JPEGs plus
 See [DEPLOYMENT.md](DEPLOYMENT.md) for GitHub Pages setup, Google Sites embedding, and the exact model integration contract. This model uses **640×640 RGB letterbox, NCHW float32 /255**, unlike the Mildew Detector classifier. The interface supports Google Sites iframes without cross-origin isolation.
 
 The original app code retains this repository's MIT license. The Ultralytics model is subject to AGPL-3.0 or a separate enterprise license; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+## Attribution & citation
+
+**Developed by Harshita Manjunatha.**
+
+If you use this prototype in a demonstration, report, or research workflow, credit the project and link to this repository. A machine-readable software citation is provided in [CITATION.cff](CITATION.cff). No associated peer-reviewed publication or independent-site validation is claimed.
+
+```text
+Manjunatha, Harshita (2026). Magnolia: Plant detection and quantification
+[Research prototype]. https://github.com/harshitha-8/magnolia_Quantification
+```
