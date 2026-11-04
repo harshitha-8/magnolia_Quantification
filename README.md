@@ -1,1 +1,98 @@
-# magnolia_Quantification
+# Magnolia detector & quantification
+
+A working browser prototype that detects and counts individual Magnolia plants in overhead nursery photographs. It follows the [Mildew Detector](https://github.com/samvadajainm/mildew-detector) deployment pattern: a static page and ONNX model, hosted by GitHub Pages and embeddable in Google Sites.
+
+**App:** https://harshitha-8.github.io/magnolia_Quantification/
+
+Upload a JPEG/PNG/WebP or choose the held-out example, then select **Count Magnolia plants**. Adjust the confidence threshold to review detections. Download CSV, JSON, or the annotated image. Photos stay in browser memory; no inference server or API key is required.
+
+## What quantification means
+
+- **Plant count:** the number of Magnolia detections after confidence filtering and non-maximum suppression. Partial visible plants at image edges may be counted.
+- **Box coverage:** the union of all detection rectangles divided by image area; overlapping pixels are counted once.
+- **Mean confidence:** the average model score for retained detections; this is not a calibrated accuracy estimate.
+
+These annotations contain one object class, `Magnolia`, with bounding boxes. They do not label disease, leaves, canopy boundaries, or physical dimensions. Box coverage must not be reported as canopy cover, biomass, disease severity, or area in square metres.
+
+## Data quality and validation
+
+**All 298 original JPEGs supplied for this prototype are truncated.** Each stops before the full image is decoded. The preparation script detects missing lower scanlines, crops to recoverable upper content with a safety margin, clips the matching YOLO boxes, and removes four zero-area annotations. Neither gray decoder fill nor the existing `_annotated.jpg` visualizations are used for training.
+
+The recovered regions contain approximately 43–56% of the original image height. The split uses contiguous acquisition blocks, with ten-image gaps between train/validation and validation/test: **208 training, 35 validation, 35 test, 20 excluded frames**. Full byte hashes and crop dimensions are recorded in [the dataset manifest](reports/dataset_manifest.csv). Sequential frames may still show the same plants. This is a same-nursery prototype evaluation, not an independent-site or independent-plant generalization test.
+
+| Final test result | Value |
+| --- | --- |
+| Test images / annotated plants | 35 / 515 |
+| Count mean absolute error at 15% confidence | 2.86 plants per image |
+| Mean count bias | +1.77 plants per image |
+| Detection mAP at IoU 0.50 | 0.600 |
+| Detection mAP across IoU 0.50–0.95 | 0.340 |
+| First test example | 23 predicted / 24 annotated |
+
+![Verified browser prototype](reports/browser-preview.jpg)
+
+Measured detection and count metrics are in [reports/evaluation.json](reports/evaluation.json); per-image count errors are in [reports/test_counts.csv](reports/test_counts.csv). AP metrics and count errors measure different things: count errors use the fixed 0.15 confidence threshold and 0.45 NMS IoU. Do not interpret mAP as counting accuracy. The default 0.15 confidence was selected by count MAE on the validation set only; see [threshold selection](reports/threshold_selection.json). The initial 0.35 test result is retained in [the baseline report](reports/baseline-evaluation-035.json).
+
+**Next improvement:** obtain complete originals, rerun preparation and training, then validate on a separate nursery or flight with known plant counts. The existing model is useful for demonstrating the complete workflow, with manual review of detections.
+
+## Repository layout
+
+| File | Purpose |
+| --- | --- |
+| `index.html`, `styles.css`, `app.js` | Static browser interface and inference |
+| `detector-core.js` | Letterbox geometry, output decoding, NMS, union coverage |
+| `models/magnolia_detector.onnx` | Fine-tuned YOLO11n for browser inference |
+| `models/magnolia_detector.pt` | Fine-tuned checkpoint for further training |
+| `models/model.json` | Model contract, settings, hash and limitations |
+| `vendor/` | Pinned ONNX Runtime Web 1.20.1, served locally |
+| `scripts/prepare_dataset.py` | Source audit, recoverable crops, adjusted labels, split |
+| `scripts/train.py` | Fine-tuning and ONNX export |
+| `scripts/evaluate.py` | Held-out metrics and PyTorch/ONNX numerical comparison |
+| `scripts/predict.py` | ONNX batch inference, counts, JSON and annotated images |
+| `reports/` | Audit, training history, evaluation and example predictions |
+| `examples/` | First held-out test crop and corresponding YOLO annotations |
+| `.github/workflows/pages.yml` | Tests and automatic GitHub Pages deployment |
+
+## Local app
+
+```bash
+python3 -m http.server 8000
+```
+
+Open http://localhost:8000. JavaScript modules and ONNX loading require HTTP; double-clicking the HTML file is insufficient. No Node packages or frontend build are needed.
+
+## Reproduce training and export
+
+Use Python 3.12, with enough free space for a local dataset. The original dataset is not included in Git.
+
+```bash
+python3.12 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python scripts/prepare_dataset.py \
+  --source '/Volumes/T9/CVPR 2027/Data/Magnolia_RGB' \
+  --output data/magnolia
+python scripts/train.py --data data/magnolia/magnolia.yaml --epochs 30 --device cpu
+python scripts/calibrate.py --data data/magnolia/magnolia.yaml --device cpu
+python scripts/evaluate.py --data data/magnolia/magnolia.yaml --device cpu
+npm test
+```
+
+Use `--device mps` on supported Apple Silicon or `--device 0` for an NVIDIA GPU. The initial pretrained `yolo11n.pt` is downloaded by Ultralytics. Seeds are fixed, but GPU operations may not be bitwise deterministic. Training refuses to overwrite an existing run directory; choose a new `--project` for another run.
+
+If recalibration on a new dataset selects another cutoff, pass it to evaluation and prediction with `--confidence` and update the slider's initial value in `index.html`. The shipped model uses 0.15.
+
+## Batch quantification
+
+```bash
+python scripts/predict.py examples/magnolia-test.jpg --output predictions
+python scripts/predict.py /path/to/complete/images --confidence 0.15 --output predictions
+```
+
+This uses ONNX Runtime on CPU. It writes per-image JSON and annotated JPEGs plus `summary.csv`. It refuses incomplete JPEGs; for the supplied dataset, run it on the prepared recovered crops instead.
+
+## Collaborator handoff
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for GitHub Pages setup, Google Sites embedding, and the exact model integration contract. This model uses **640×640 RGB letterbox, NCHW float32 /255**, unlike the Mildew Detector classifier. The interface supports Google Sites iframes without cross-origin isolation.
+
+The original app code retains this repository's MIT license. The Ultralytics model is subject to AGPL-3.0 or a separate enterprise license; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

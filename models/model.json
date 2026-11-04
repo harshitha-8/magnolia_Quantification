@@ -1,0 +1,43 @@
+{
+  "name": "Magnolia plant detector",
+  "architecture": "YOLO11n",
+  "classes": [
+    "Magnolia"
+  ],
+  "input": {
+    "name": "images",
+    "shape": [
+      1,
+      3,
+      640,
+      640
+    ],
+    "dtype": "float32",
+    "preprocessing": "RGB, letterbox to 640x640 with pad=114, divide by 255, NCHW"
+  },
+  "output": {
+    "name": "output0",
+    "shape": [
+      1,
+      5,
+      8400
+    ],
+    "format": "cx,cy,width,height,class_probability; pixel coordinates in letterboxed input; no objectness channel"
+  },
+  "postprocessing": {
+    "confidence": 0.15,
+    "nms_iou": 0.45,
+    "coverage": "union of boxes / image area"
+  },
+  "opset": 17,
+  "sha256": "a11dd9159a756a69bca6341d1ba8fb4c8e80545cc1479e356a8f333a2d3ad814",
+  "training_epochs": 30,
+  "seed": 42,
+  "license": "AGPL-3.0; see THIRD_PARTY_NOTICES.md",
+  "limitations": [
+    "Same-nursery sequential-frame split, not independent-field validation.",
+    "All source JPEGs truncated; evaluated only on recovered top crops.",
+    "Precision/recall are Ultralytics validation metrics; count MAE uses fixed 0.15 confidence.",
+    "Bounding boxes provide counts and box coverage, not leaf/canopy segmentation or physical area."
+  ]
+}

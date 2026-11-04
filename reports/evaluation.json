@@ -1,0 +1,35 @@
+{
+  "test_images": 35,
+  "confidence_threshold": 0.15,
+  "nms_iou": 0.45,
+  "precision": 0.7807207426468925,
+  "recall": 0.5530717929142268,
+  "map50": 0.5997246056012225,
+  "map50_95": 0.3395080944144984,
+  "count_mae": 2.857142857142857,
+  "count_bias": 1.7714285714285714,
+  "total_annotated": 515,
+  "total_predicted": 577,
+  "onnx_max_absolute_error": 0.000762939453125,
+  "onnx_input_shape": [
+    1,
+    3,
+    640,
+    640
+  ],
+  "onnx_output_shape": [
+    1,
+    5,
+    8400
+  ],
+  "onnx_sha256": "a11dd9159a756a69bca6341d1ba8fb4c8e80545cc1479e356a8f333a2d3ad814",
+  "example_source": "IMG_1751.jpg",
+  "example_annotated_count": 24,
+  "example_predicted_count": 23,
+  "caveats": [
+    "Same-nursery sequential-frame split, not independent-field validation.",
+    "All source JPEGs truncated; evaluated only on recovered top crops.",
+    "Precision/recall are Ultralytics validation metrics; count MAE uses fixed 0.15 confidence.",
+    "Bounding boxes provide counts and box coverage, not leaf/canopy segmentation or physical area."
+  ]
+}

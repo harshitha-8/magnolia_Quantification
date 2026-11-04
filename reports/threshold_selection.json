@@ -1,0 +1,53 @@
+{
+  "split": "validation only",
+  "images": 35,
+  "criterion": "lowest count MAE; higher threshold wins ties",
+  "selected_confidence": 0.15,
+  "candidates": [
+    {
+      "threshold": 0.1,
+      "count_mae": 2.5142857142857142,
+      "count_bias": 1.8285714285714285
+    },
+    {
+      "threshold": 0.15,
+      "count_mae": 1.6857142857142857,
+      "count_bias": -0.02857142857142857
+    },
+    {
+      "threshold": 0.2,
+      "count_mae": 1.8857142857142857,
+      "count_bias": -1.0285714285714285
+    },
+    {
+      "threshold": 0.25,
+      "count_mae": 2.342857142857143,
+      "count_bias": -1.9428571428571428
+    },
+    {
+      "threshold": 0.3,
+      "count_mae": 2.8857142857142857,
+      "count_bias": -2.7142857142857144
+    },
+    {
+      "threshold": 0.35,
+      "count_mae": 3.6,
+      "count_bias": -3.5428571428571427
+    },
+    {
+      "threshold": 0.4,
+      "count_mae": 4.257142857142857,
+      "count_bias": -4.257142857142857
+    },
+    {
+      "threshold": 0.45,
+      "count_mae": 5.0285714285714285,
+      "count_bias": -5.0285714285714285
+    },
+    {
+      "threshold": 0.5,
+      "count_mae": 5.714285714285714,
+      "count_bias": -5.714285714285714
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "images": 298,
+  "truncated_images": 298,
+  "degenerate_boxes_removed": 4,
+  "splits": {
+    "train": 208,
+    "val": 35,
+    "test": 35,
+    "excluded": 20
+  },
+  "visible_boxes": {
+    "train": 7058,
+    "val": 891,
+    "test": 515
+  },
+  "crop_fraction_range": [
+    0.43209876543209874,
+    0.5555555555555556
+  ],
+  "limitation": "Truncated inputs: only recoverable top regions used. Same-field acquisition split; no independent-site validation."
+}

@@ -1,0 +1,10 @@
+._*
+.DS_Store
+.venv/
+__pycache__/
+data/
+runs/
+*.cache
+*.log
+node_modules/
+predictions/
