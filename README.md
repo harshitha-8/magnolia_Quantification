@@ -2,7 +2,7 @@
 
 **A computer vision research prototype developed by Harshita Manjunatha.**
 
-Plant counting. A clearer perspective.
+Magnolia detection & quantification.
 
 Magnolia turns overhead nursery imagery into inspectable plant detections, instance counts, and bounding-box coverage. A compact YOLO11n model runs directly in the browser through ONNX Runtime, keeping visitor images on their own devices. The interface pairs a field-inspired visual identity with numbered boxes, traceable result sources, and exportable data.
 
@@ -138,3 +138,11 @@ If you use this prototype in a demonstration, report, or research workflow, cred
 Manjunatha, Harshita (2026). Magnolia: Plant detection and quantification
 [Research prototype]. https://github.com/harshitha-8/magnolia_Quantification
 ```
+
+## Botanical profile & interface
+
+The opening card introduces Southern magnolia (*Magnolia grandiflora* L., family Magnoliaceae) using a credited botanical photograph and facts sourced from [NC State Extension](https://plants.ces.ncsu.edu/plants/magnolia-grandiflora/) and [Oregon State University](https://landscapeplants.oregonstate.edu/plants/magnolia-grandiflora). This educational profile does not establish the species of the dataset plants: the detector has one class, `Magnolia`.
+
+Developer attribution appears in two visible places: the introduction and footer. The workspace, result notes, export controls, and three research cards use larger text for readability. The original model and reference-annotation behavior are preserved.
+
+Photo credit and asset provenance are documented in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

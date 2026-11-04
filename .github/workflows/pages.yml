@@ -26,7 +26,7 @@ jobs:
         run: |
           mkdir -p site/models site/reports
           cp index.html app.js detector-core.js styles.css favicon.svg site/
-          cp -R vendor examples references site/
+          cp -R vendor examples references assets site/
           cp models/magnolia_detector.onnx models/model.json site/models/
           cp reports/evaluation.json reports/dataset_audit.json site/reports/
           touch site/.nojekyll
