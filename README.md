@@ -6,11 +6,26 @@ A working browser prototype that detects and counts individual Magnolia plants i
 
 Upload a JPEG/PNG/WebP or choose the held-out example, then select **Count Magnolia plants**. Adjust the confidence threshold to review detections. Download CSV, JSON, or the annotated image. Photos stay in browser memory; no inference server or API key is required.
 
+## Using the published app
+
+Use **https://harshitha-8.github.io/magnolia_Quantification/**, not a previous `127.0.0.1` preview tab. The permanent GitHub Pages app works without a local Python server. A localhost tab works only while its local preview server is running.
+
+1. Choose a local JPEG, PNG, or WebP, or select the held-out example. Wait for the model-ready message, then choose **Count Magnolia plants**.
+2. Boxes show plant numbers only. Numbers such as the old `3 · 82%` meant plant 3 with a model score of 82%; they were not plant measurements. Confidence percentages have been removed from the boxes and the main metrics.
+3. **Advanced detection settings** contains the optional confidence filter. Lower values include weaker candidates; higher values suppress them. It changes results immediately after inference. The threshold is not an accuracy percentage, and raising it to 100% would usually hide every detection.
+4. For an exact supplied image or a prepared recovered crop, the **Supplied annotations (reference)** option becomes available. It displays every provided box in the recoverable region. The metric **Annotations displayed: 100%** means all those annotation boxes are visible. It is not model confidence, model accuracy, or proof that the annotation itself is exhaustive. It does not represent automatic detection.
+5. CSV and JSON exports explicitly identify `model_predictions` or `provided_annotations`. Reference boxes have no fabricated confidence scores.
+
+Known source files are recognized by SHA-256 content hashes, not filenames. A different or edited image with the same filename never inherits reference annotations. For known truncated originals, the app crops away the damaged lower rows and resizes the recovered region to 1280 pixels wide before prediction or reference display. Exported pixel coordinates refer to that working image, whose dimensions and source dimensions are included in JSON. Unknown images are processed at their original aspect ratio without this dataset-specific crop.
+
+**100% automatic detection is not established.** The measured model errors below remain applicable; displaying every provided annotation cannot improve or replace those evaluation results. Full original image regions that were lost from the supplied JPEGs cannot be recovered by changing a confidence slider.
+
 ## What quantification means
 
 - **Plant count:** the number of Magnolia detections after confidence filtering and non-maximum suppression. Partial visible plants at image edges may be counted.
 - **Box coverage:** the union of all detection rectangles divided by image area; overlapping pixels are counted once.
-- **Mean confidence:** the average model score for retained detections; this is not a calibrated accuracy estimate.
+- **Mean confidence (JSON export):** the average model score for retained detections; this is not a calibrated accuracy estimate.
+- **Annotations displayed:** in the explicit reference view, the fraction of provided visible-region boxes rendered. The app shows all of them, so this is 100%; box coverage can still be much lower because plants do not occupy the entire image.
 
 These annotations contain one object class, `Magnolia`, with bounding boxes. They do not label disease, leaves, canopy boundaries, or physical dimensions. Box coverage must not be reported as canopy cover, biomass, disease severity, or area in square metres.
 
@@ -49,6 +64,7 @@ Measured detection and count metrics are in [reports/evaluation.json](reports/ev
 | `scripts/train.py` | Fine-tuning and ONNX export |
 | `scripts/evaluate.py` | Held-out metrics and PyTorch/ONNX numerical comparison |
 | `scripts/predict.py` | ONNX batch inference, counts, JSON and annotated images |
+| `scripts/build_references.py`, `references/annotations.json` | Exact-file matches and clearly labeled provided annotation boxes |
 | `reports/` | Audit, training history, evaluation and example predictions |
 | `examples/` | First held-out test crop and corresponding YOLO annotations |
 | `.github/workflows/pages.yml` | Tests and automatic GitHub Pages deployment |
@@ -75,6 +91,7 @@ python scripts/prepare_dataset.py \
 python scripts/train.py --data data/magnolia/magnolia.yaml --epochs 30 --device cpu
 python scripts/calibrate.py --data data/magnolia/magnolia.yaml --device cpu
 python scripts/evaluate.py --data data/magnolia/magnolia.yaml --device cpu
+python scripts/build_references.py --source '/Volumes/T9/CVPR 2027/Data/Magnolia_RGB'
 npm test
 ```
 

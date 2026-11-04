@@ -37,5 +37,9 @@ export function unionArea(boxes) {
   return area;
 }
 export function summarize(boxes,width,height) {
-  return {count:boxes.length,boxCoveragePercent:100*unionArea(boxes)/(width*height),meanConfidence:boxes.length?boxes.reduce((s,b)=>s+b.score,0)/boxes.length:null};
+  const scores=boxes.map(b=>b.score).filter(s=>typeof s==='number'&&Number.isFinite(s));
+  return {count:boxes.length,boxCoveragePercent:100*unionArea(boxes)/(width*height),meanConfidence:scores.length?scores.reduce((s,v)=>s+v,0)/scores.length:null};
+}
+export function referenceBoxes(normalized,width,height) {
+  return normalized.map(([x1,y1,x2,y2])=>({x1:x1*width,y1:y1*height,x2:x2*width,y2:y2*height,score:null}));
 }
