@@ -4,7 +4,7 @@
 
 Magnolia detection & quantification.
 
-Magnolia turns overhead nursery imagery into inspectable plant detections, instance counts, and bounding-box coverage. A compact YOLO11n model runs directly in the browser through ONNX Runtime, keeping visitor images on their own devices. The interface pairs a field-inspired visual identity with numbered boxes, traceable result sources, and exportable data.
+Magnolia turns overhead nursery imagery into inspectable plant detections, instance counts, and bounding-box coverage. A compact YOLO11n model runs directly in the browser through ONNX Runtime, keeping visitor images on their own devices. The interface puts the interactive demo first, with numbered boxes, traceable result sources, direct project resources, and measured evaluation results.
 
 **[Open the research prototype](https://harshitha-8.github.io/magnolia_Quantification/)** · **[Deployment & Google Sites](DEPLOYMENT.md)** · **[Evaluation](reports/evaluation.json)**
 
@@ -141,8 +141,14 @@ Manjunatha, Harshita (2026). Magnolia: Plant detection and quantification
 
 ## Botanical profile & interface
 
-The opening card introduces Southern magnolia (*Magnolia grandiflora* L., family Magnoliaceae) using a credited botanical photograph and facts sourced from [NC State Extension](https://plants.ces.ncsu.edu/plants/magnolia-grandiflora/) and [Oregon State University](https://landscapeplants.oregonstate.edu/plants/magnolia-grandiflora). This educational profile does not establish the species of the dataset plants: the detector has one class, `Magnolia`.
+A compact plant-reference note below the demo introduces Southern magnolia (*Magnolia grandiflora* L., family Magnoliaceae) using a credited botanical photograph and facts sourced from [NC State Extension](https://plants.ces.ncsu.edu/plants/magnolia-grandiflora/) and [Oregon State University](https://landscapeplants.oregonstate.edu/plants/magnolia-grandiflora). This educational profile does not establish the species of the dataset plants: the detector has one class, `Magnolia`.
 
-Developer attribution appears in two visible places: the introduction and footer. The workspace, result notes, export controls, and three research cards use larger text for readability. The original model and reference-annotation behavior are preserved.
+Developer attribution appears in two visible places: the introduction and footer. The interface uses readable workspace labels and result notes, a concise method description, and a table of measured test results. The original model and reference-annotation behavior are preserved.
 
 Photo credit and asset provenance are documented in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+## Research-demo presentation
+
+The page uses a compact project title, developer attribution, direct Code / ONNX / Evaluation / Documentation links, and an interactive image-to-result workspace. The oversized hero, slogans, decorative feature strip, and promotional cards have been removed. The botanical profile is a small reference with expandable details and credits.
+
+See [DESIGN_REFERENCES.md](DESIGN_REFERENCES.md) for the CVPR, NeurIPS, ACL, and ICLR project pages reviewed for this redesign. Layout code is original; the prototype makes no conference-acceptance or award claim.

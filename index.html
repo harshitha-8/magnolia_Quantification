@@ -2,62 +2,59 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Magnolia is a plant detection and quantification research prototype developed by Harshita Manjunatha. Count plants, inspect boxes, and export results directly in your browser.">
-  <meta name="author" content="Harshita Manjunatha"><meta name="theme-color" content="#102c26">
-  <meta property="og:title" content="Magnolia — Plant detection & quantification">
-  <meta property="og:description" content="A computer vision research prototype developed by Harshita Manjunatha. Explore overhead nursery imagery with on-device plant detection.">
+  <meta name="description" content="Magnolia plant detection and quantification. An interactive research prototype developed by Harshita Manjunatha, with browser-based inference and downloadable results.">
+  <meta name="author" content="Harshita Manjunatha"><meta name="theme-color" content="#ffffff">
+  <meta property="og:title" content="Magnolia: Plant Detection and Quantification"><meta property="og:description" content="An interactive research prototype developed by Harshita Manjunatha.">
   <meta property="og:type" content="website"><meta property="og:url" content="https://harshitha-8.github.io/magnolia_Quantification/">
-  <title>Magnolia — Plant detection & quantification · Harshita Manjunatha</title>
+  <title>Magnolia: Plant Detection and Quantification · Harshita Manjunatha</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="styles.css">
   <script defer src="vendor/ort.wasm.min.js"></script><script type="module" src="app.js"></script>
 </head>
 <body>
-<a class="skip-link" href="#workspace">Skip to detector</a>
+<a class="skip-link" href="#workspace">Skip to demo</a>
 <main>
-  <header>
-    <nav aria-label="Main navigation">
-      <a class="brand" href="#" aria-label="Magnolia home"><span class="mark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M16 25C5 23 4 9 7 6c7 0 11 8 9 19Z" fill="currentColor" opacity=".55"/><path d="M16 25C27 23 28 9 25 6c-7 0-11 8-9 19Z" fill="currentColor"/><path d="M16 25V13" stroke="#153e32" stroke-width="1.5"/></svg></span><span>magnolia<span class="brand-sub">PLANT VISION RESEARCH</span></span></a>
-      <div class="nav-links"><a href="#workspace">Workspace</a><a href="#research">The research</a><a href="https://github.com/harshitha-8/magnolia_Quantification" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a></div>
-      <span class="tag"><i aria-hidden="true"></i> Research prototype</span>
-    </nav>
-    <div class="hero">
-      <div class="hero-copy"><p class="eyebrow">COMPUTER VISION, ROOTED IN THE FIELD</p><h1>Magnolia detection<br><em>&amp; quantification.</em></h1><p class="intro">Turn an overhead nursery image into plant counts and measurable box coverage. Inspect the evidence. Keep the image on your device.</p><p class="byline"><span class="author-avatar" aria-hidden="true">HM</span><span>Developed by <strong>Harshita Manjunatha</strong><small>Magnolia detection & quantification research</small></span></p></div>
-      <figure class="field-card botanical-card">
-        <div class="field-heading"><span><i aria-hidden="true"></i> MAGNOLIA / IN FOCUS</span><span>BOTANICAL PROFILE</span></div>
-        <div class="field-image"><img src="assets/southern-magnolia.jpg" alt="Southern magnolia with a white flower among glossy green leaves" width="1024" height="683"><span class="corner tl" aria-hidden="true"></span><span class="corner tr" aria-hidden="true"></span><span class="corner bl" aria-hidden="true"></span><span class="corner br" aria-hidden="true"></span></div>
-        <div class="botanical-title"><div><h2>Southern magnolia</h2><p><i>Magnolia grandiflora</i> L.</p></div><span>MAGNOLIACEAE</span></div>
-        <dl class="botanical-facts"><div><dt>Growth habit</dt><dd>An evergreen ornamental tree. Compact cultivars can grow as shrubs or small trees.</dd></div><div><dt>Native U.S. range</dt><dd>Southeastern coastal plains, from North Carolina to Florida and west to Texas.</dd></div><div><dt>Signature features</dt><dd>Glossy leaves and large, fragrant white flowers.</dd></div></dl>
-        <p class="botanical-note">A species profile for context. The detector labels Magnolia plants; it does not identify species or cultivars.</p>
-        <figcaption class="botanical-credits"><span>Botany: <a href="https://plants.ces.ncsu.edu/plants/magnolia-grandiflora/" target="_blank" rel="noopener">NC State Extension</a> · <a href="https://landscapeplants.oregonstate.edu/plants/magnolia-grandiflora" target="_blank" rel="noopener">Oregon State</a></span><span>Photo: Cathy DeWitt · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> · display cropped</span></figcaption>
-      </figure>
-    </div>
-    <div class="feature-strip"><span><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="4" y="8" width="12" height="9" rx="2"/><path d="M6.5 8V5.5a3.5 3.5 0 0 1 7 0V8"/></svg>Images stay on your device</span><span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4"/><rect x="7" y="7" width="6" height="6" rx="1"/></svg>YOLO11n · ONNX inference</span><span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v10m-4-4 4 4 4-4M4 14v3h12v-3"/></svg>Export your results</span></div>
+  <header class="project-header">
+    <p class="project-type">Research prototype · 2026</p>
+    <h1>Magnolia: Plant Detection<br class="desktop-break"> and Quantification</h1>
+    <p class="byline">Developed by <strong>Harshita Manjunatha</strong></p>
+    <p class="intro">Detect and count Magnolia plants in overhead nursery images. Inspect bounding boxes, measure box coverage, and download the results. Images are processed on your device.</p>
+    <nav class="project-links" aria-label="Project resources"><a href="#workspace">Interactive demo</a><a href="https://github.com/harshitha-8/magnolia_Quantification" target="_blank" rel="noopener">Code</a><a href="models/magnolia_detector.onnx" download>Model (ONNX)</a><a href="reports/evaluation.json" target="_blank" rel="noopener">Evaluation</a><a href="https://github.com/harshitha-8/magnolia_Quantification#readme" target="_blank" rel="noopener">Documentation</a></nav>
   </header>
-  <div class="section-heading"><div><p class="eyebrow">THE WORKSPACE</p><h2>Look closer. Count with context.</h2></div><span class="section-caption">One image. An inspectable result.</span></div>
+  <div class="section-heading"><h2>Interactive demo</h2><span>YOLO11n · ONNX Runtime</span></div>
   <section class="workspace" id="workspace" aria-label="Magnolia detector">
-    <aside>
-      <div class="step-heading"><span>01</span><h3>Choose your image</h3></div>
-      <label id="dropzone" for="file"><span class="upload-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><rect x="5" y="5" width="22" height="22" rx="5"/><path d="m10 21 5-6 4 4 3-3 5 6M12 11h.01"/></svg></span><strong>Bring your nursery into view</strong><span>Choose an image or drop it here</span><span class="file-types">JPG, PNG, WEBP · UP TO 40 MB</span><input id="file" type="file" accept="image/jpeg,image/png,image/webp"></label>
-      <button id="sample" class="secondary" type="button">Explore the sample image <span aria-hidden="true">↗</span></button>
+    <aside class="controls-panel">
+      <h3>Choose your image</h3>
+      <label id="dropzone" for="file"><strong>Upload an image</strong><span>or drag and drop it here</span><span class="file-types">JPEG, PNG or WebP · up to 40 MB</span><input id="file" type="file" accept="image/jpeg,image/png,image/webp"></label>
+      <button id="sample" class="secondary" type="button">Use example image</button>
       <p id="filename" class="small">No image selected</p>
-      <div class="step-heading"><span>02</span><h3>Choose your view</h3></div>
-      <label for="result-source" class="range-label">Box source</label>
+      <h3 class="view-heading">Choose your view</h3>
+      <label for="result-source">Box source</label>
       <select id="result-source"><option value="model">Automatic model detections</option><option value="reference" id="reference-option" disabled>Supplied annotations (reference)</option></select>
       <p id="reference-status" class="small">Reference annotations are available for exact matches to the supplied dataset.</p>
-      <details id="advanced"><summary>Advanced detection settings</summary><label class="range-label" for="confidence">Minimum confidence <output id="confidence-value">15%</output></label><input id="confidence" type="range" min="1" max="90" step="1" value="15"><p class="small">This filters model scores, not detection accuracy. Lower values show more candidates; higher values hide weaker predictions. Changes apply immediately after detection. Reference annotations are not filtered.</p></details>
-      <button id="analyze" disabled type="button">Count Magnolia plants <span aria-hidden="true">→</span></button>
+      <details id="advanced"><summary>Detection settings</summary><label class="range-label" for="confidence">Minimum confidence <output id="confidence-value">15%</output></label><input id="confidence" type="range" min="1" max="90" step="1" value="15"><p class="small">Lower values include weaker model predictions. The count updates immediately after inference. This setting does not filter supplied annotations.</p></details>
+      <button id="analyze" disabled type="button">Count Magnolia plants</button>
       <p id="status" role="status" aria-live="polite">Loading the detection model…</p>
-      <details><summary>Research notes & limitations</summary><p>YOLO11n, fine-tuned for 30 epochs on Magnolia plant boxes. Supplied JPEGs were truncated, so training uses recovered upper regions. Results have not been validated at another nursery.</p><p>Counts can include partial plants. Box coverage is rectangle union area divided by image area, not canopy cover, disease severity, physical area, or accuracy. Reference annotations are supplied labels, not model predictions.</p><a href="reports/evaluation.json">Read the evaluation report ↗</a></details>
+      <details class="limitations"><summary>Data and model limitations</summary><p>The supplied JPEGs are truncated; known source images are restricted to their recoverable upper regions. The model has not been validated at another nursery. Partial plants may be counted.</p><p>Box coverage is the union of rectangles divided by image area. It is not canopy cover, physical area, disease severity, or detection accuracy. Supplied annotations are labels, not predictions.</p></details>
     </aside>
     <div class="preview-panel">
-      <div class="preview-heading"><div><span class="canvas-dot" aria-hidden="true"></span><h3>Detection canvas</h3></div><span id="image-size" class="small">READY FOR YOUR IMAGE</span></div>
-      <div id="empty"><div class="empty-reticle" aria-hidden="true"><svg viewBox="0 0 80 80" fill="none"><path d="M20 10H10v10m50-10h10v10M10 60v10h10m50-10v10H60" stroke="currentColor" stroke-width="2"/><path d="M40 56C20 53 20 30 25 24c13 1 20 16 15 32Z" fill="currentColor" opacity=".35"/><path d="M40 56C60 53 60 30 55 24c-13 1-20 16-15 32Z" fill="currentColor" opacity=".8"/></svg></div><p class="empty-kicker">A NEW PERSPECTIVE STARTS HERE</p><h3>Room for a closer look.</h3><p>Upload an overhead image or explore the sample.<br>Your plant boxes and counts will appear here.</p><span class="empty-note">LOCAL PROCESSING <span aria-hidden="true">·</span> NO IMAGE UPLOADS</span></div>
+      <div class="preview-heading"><h3>Result</h3><span id="image-size">No image</span></div>
+      <div id="empty"><h3>Select an image to begin</h3><p>Upload your own overhead photograph,<br>or use the example image.</p></div>
       <canvas id="preview" hidden aria-label="Uploaded image with numbered Magnolia detection boxes"></canvas>
-      <div id="results" hidden><div class="metrics"><div><span id="count-label">Plants detected</span><strong id="count">—</strong><small>VISIBLE INSTANCES</small></div><div><span>Box coverage</span><strong id="coverage">—</strong><small>UNION OF RECTANGLES</small></div><div><span id="source-label">Result source</span><strong id="source-value">—</strong><small>TRACEABLE OUTPUT</small></div></div><p class="small" id="result-note"></p><div class="downloads"><span>Take your results with you</span><div><button id="csv" type="button">CSV <span aria-hidden="true">↓</span></button><button id="json" type="button">JSON <span aria-hidden="true">↓</span></button><button id="png" type="button">Annotated image <span aria-hidden="true">↓</span></button></div></div></div>
-      <div class="canvas-footer"><span><i aria-hidden="true"></i> Processed in your browser</span><span>MAGNOLIA / VISION RESEARCH</span></div>
+      <div id="results" hidden>
+        <div class="metrics"><div><span id="count-label">Plants detected</span><strong id="count">—</strong></div><div><span>Box coverage</span><strong id="coverage">—</strong></div><div><span id="source-label">Result source</span><strong id="source-value">—</strong></div></div>
+        <p id="result-note"></p>
+        <div class="downloads"><span>Download results</span><div><button id="csv" type="button">CSV</button><button id="json" type="button">JSON</button><button id="png" type="button">Annotated image</button></div></div>
+      </div>
+      <p class="canvas-footer">Processed in your browser. No images are uploaded to a server.</p>
     </div>
   </section>
-  <section class="research-section" id="research" aria-label="Model, evidence, and research"><div class="research-cards"><article><span>01 / THE MODEL</span><h3>Compact model.<br>Local inference.</h3><p>A fine-tuned YOLO11n detector, exported to ONNX and run directly on your device.</p></article><article><span>02 / THE EVIDENCE</span><h3>Visible boxes.<br>Clear provenance.</h3><p>Inspect automatic detections or view supplied annotations. Each result says where its boxes came from.</p></article><article><span>03 / THE RESEARCH</span><h3>Open workflow.<br>Honest limits.</h3><p>Training scripts, evaluation metrics, data-quality notes, and exportable results accompany the prototype.</p><a href="https://github.com/harshitha-8/magnolia_Quantification#readme" target="_blank" rel="noopener">Explore the repository ↗</a></article></div></section>
-  <footer><div><a class="footer-brand" href="#">magnolia<span aria-hidden="true">.</span></a><p>Developed by <strong>Harshita Manjunatha</strong></p></div><div class="footer-right"><span class="tag"><i aria-hidden="true"></i> Research prototype</span><p>Plant detection & quantification · 2026</p><a href="https://github.com/harshitha-8/magnolia_Quantification" target="_blank" rel="noopener">Source code & documentation ↗</a></div></footer>
+  <section class="research-section" id="research" aria-labelledby="method-title">
+    <div class="method-copy"><h2 id="method-title">Method and evaluation</h2><p>The detector is a YOLO11n model fine-tuned for 30 epochs on one class, Magnolia, and exported to ONNX. Predictions are filtered by confidence and non-maximum suppression. Box coverage measures the union of the retained rectangles.</p>
+      <table><caption>Held-out test set, 15% confidence threshold</caption><thead><tr><th scope="col">Test images</th><th scope="col">Annotated plants</th><th scope="col">Count MAE</th><th scope="col">mAP@0.50</th></tr></thead><tbody><tr><td>35</td><td>515</td><td>2.86 plants/image</td><td>0.600</td></tr></tbody></table>
+      <p class="evaluation-note">These results use recovered crops from the same nursery acquisition. They do not establish performance at a different site. <a href="reports/evaluation.json">Full evaluation</a> · <a href="https://github.com/harshitha-8/magnolia_Quantification/blob/main/reports/test_counts.csv" target="_blank" rel="noopener">Per-image count errors</a></p>
+    </div>
+    <section class="plant-reference" aria-labelledby="plant-title"><img src="assets/southern-magnolia.jpg" alt="A white Southern magnolia flower and glossy leaves" width="1024" height="683" loading="lazy"><div><h3 id="plant-title">Plant reference</h3><p><strong>Southern magnolia</strong><br><i>Magnolia grandiflora</i> L.</p><p>An evergreen ornamental tree native to the southeastern United States.</p><details><summary>Botanical details and photo credit</summary><p>Family: Magnoliaceae. Native from North Carolina to Florida and west to Texas. Compact cultivars can be grown as shrubs or small trees.</p><p>This is a botanical example, not a species identification by the detector.</p><p>Sources: <a href="https://plants.ces.ncsu.edu/plants/magnolia-grandiflora/" target="_blank" rel="noopener">NC State Extension</a> and <a href="https://landscapeplants.oregonstate.edu/plants/magnolia-grandiflora" target="_blank" rel="noopener">Oregon State</a>. Photo: Cathy DeWitt, <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>; display cropped.</p></details></div></section>
+  </section>
+  <footer><span>Developed by <strong>Harshita Manjunatha</strong> · Research prototype</span><span><a href="https://github.com/harshitha-8/magnolia_Quantification" target="_blank" rel="noopener">GitHub</a> · <a href="https://github.com/harshitha-8/magnolia_Quantification/blob/main/CITATION.cff" target="_blank" rel="noopener">Cite this software</a></span></footer>
 </main>
 </body></html>
