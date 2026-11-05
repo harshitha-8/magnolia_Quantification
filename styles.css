@@ -17,10 +17,9 @@ button, a, input, select, summary { -webkit-tap-highlight-color: transparent; }
 .skip-link { position: fixed; top: -80px; left: 16px; z-index: 5; padding: 8px 16px; background: #fff; border: 1px solid var(--green); }
 .skip-link:focus { top: 12px; }
 .project-header { max-width: 900px; margin: 44px auto 34px; text-align: center; }
-.project-type { font-size: 14px; color: var(--muted); margin: 0 0 12px; }
 h1 { font-size: clamp(29px, 3.4vw, 41px); line-height: 1.2; letter-spacing: -1px; font-weight: 650; margin: 0 0 16px; }
 .byline { margin: 0 0 15px; font-size: 16px; }
-.byline strong { font-weight: 550; color: var(--green); }
+.byline strong { font-size: 14px; font-weight: 550; color: var(--green); }
 .intro { max-width: 750px; margin: 0 auto; color: #565f59; font-size: 16px; line-height: 1.7; }
 .project-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 21px; }
 .project-links a { display: inline-block; padding: 6px 13px; border: 1px solid #d1d8d2; border-radius: 5px; background: #f9faf8; font-size: 14px; color: #34443a; text-decoration: none; }
