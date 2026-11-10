@@ -50,11 +50,6 @@ select { display: block; width: 100%; margin-top: 5px; padding: 9px 6px; border:
 details { font-size: 13px; color: #5d685e; }
 summary { cursor: pointer; color: #405b45; font-size: 13px; }
 details p { line-height: 1.7; }
-#advanced { border-top: 1px solid var(--line); padding-top: 12px; }
-#advanced[open] summary { margin-bottom: 12px; }
-.range-label { display: flex; justify-content: space-between; font-size: 13px; }
-output { font-weight: 600; }
-input[type=range] { width: 100%; margin: 12px 0 0; accent-color: var(--green); }
 #analyze { display: block; width: 100%; margin-top: 18px; padding: 11px; color: #fff; background: var(--green); border-color: var(--green); font-weight: 550; }
 #analyze:hover:enabled { background: #194a33; }
 #status { font-size: 12px; color: #59695b; line-height: 1.7; margin: 9px 0 17px; min-height: 30px; }
@@ -80,18 +75,16 @@ canvas { display: block; width: 100%; height: auto; border: 1px solid #d0d7cc; b
 .downloads > div { display: flex; flex-wrap: wrap; gap: 6px; }
 .downloads button { font-size: 13px; }
 .canvas-footer { margin: auto 0 0; padding-top: 25px; font-size: 12px; color: #6d786c; }
-.research-section { display: grid; grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr); gap: 44px; padding: 35px 0 28px; align-items: start; }
+.research-section { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 3fr); gap: 38px; padding: 35px 0 28px; align-items: start; }
+.method-copy h3 { margin: 18px 0 5px; }
 .method-copy > p { color: #555f56; font-size: 14px; line-height: 1.8; margin: 13px 0; }
-table { border-collapse: collapse; width: 100%; font-size: 13px; text-align: left; margin-top: 16px; }
-caption { text-align: left; color: #5c6c5d; font-size: 12px; margin-bottom: 7px; }
-th, td { border-bottom: 1px solid var(--line); padding: 9px 8px; vertical-align: top; }
-th { font-weight: 550; border-top: 1px solid var(--line); background: #f8f9f6; }
-.method-copy .evaluation-note { font-size: 12px; line-height: 1.8; color: #6b7668; }
-.plant-reference { display: flex; align-items: start; gap: 14px; padding-top: 2px; }
-.plant-reference > img { width: 86px; height: 86px; flex: 0 0 86px; object-fit: cover; object-position: 47% 37%; border-radius: 3px; }
-.plant-reference > div { min-width: 0; }
-.plant-reference h3 { margin: 0 0 7px; font-size: 15px; }
-.plant-reference p { color: #616c5e; font-size: 12px; line-height: 1.65; margin: 5px 0; }
+.method-copy .evaluation-note { font-size: 13px; }
+.plant-reference figure { margin: 0; }
+.plant-reference img { display: block; width: 100%; height: auto; border-radius: 3px; }
+.plant-reference figcaption { font-size: 14px; line-height: 1.55; margin-top: 9px; }
+.plant-reference figcaption strong { display: block; }
+.plant-reference h3 { margin: 0 0 9px; font-size: 17px; }
+.plant-reference p { color: #616c5e; font-size: 13px; line-height: 1.65; margin: 7px 0; }
 .plant-reference strong { color: #43573f; font-weight: 550; }
 .plant-reference details { margin-top: 9px; }
 .plant-reference summary { font-size: 12px; }
@@ -102,7 +95,6 @@ footer strong { font-weight: 500; color: #596d50; }
   .workspace { grid-template-columns: 260px minmax(0, 1fr); }
   .controls-panel, .preview-panel { padding: 17px; }
   .research-section { gap: 26px; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
-  .plant-reference { flex-direction: column; }
   .metrics { gap: 10px; }
   .metrics > div + div { padding-left: 10px; }
   .metrics strong { font-size: 27px; }
@@ -124,7 +116,7 @@ footer strong { font-weight: 500; color: #596d50; }
   .preview-panel { padding: 18px; }
   #empty { min-height: 250px; }
   .research-section { grid-template-columns: 1fr; gap: 25px; padding-top: 28px; }
-  .plant-reference { flex-direction: row; border-top: 1px solid var(--line); padding-top: 20px; }
+  .plant-reference { max-width: 440px; border-top: 1px solid var(--line); padding-top: 20px; }
   .canvas-footer { font-size: 12px; }
 }
 @media (max-width: 380px) {
@@ -134,7 +126,5 @@ footer strong { font-weight: 500; color: #596d50; }
   .metrics strong { font-size: 26px; }
   #source-value { font-size: 22px; }
   .metrics > div + div { padding-left: 8px; }
-  table { font-size: 11px; }
-  th, td { padding: 8px 5px; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }

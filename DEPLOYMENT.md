@@ -45,7 +45,7 @@ Keep all URLs relative to the app directory. The repository lives under a GitHub
 
 ## Reference boxes and simplified labels
 
-The app now draws only plant numbers, with no confidence percentages beside the boxes. The optional confidence filter is under **Advanced detection settings** and is not an accuracy control.
+The app now draws only plant numbers, with no confidence percentages beside the boxes. Automatic counting uses a fixed 0.15 cutoff selected on validation images. The cutoff is recorded in prediction exports.
 
 Deploy `references/annotations.json` with the app. It contains the provided visible-region annotations for 298 source files and hashes of the 298 originals plus 278 prepared crops. This enables an explicitly labeled **Supplied annotations (reference)** view for exact file matches. Reference display is separate from ONNX inference: `100%` means every supplied visible-region box is drawn. It must never be presented as 100% model accuracy. Reference exports carry `resultSource: provided_annotations`, null scores, and no model confidence threshold.
 
@@ -59,7 +59,7 @@ The repository includes the ONNX model, fine-tuned `.pt` checkpoint, model contr
 - Wait for **Model ready**, choose a supported image under 40 MB and 60 megapixels, then select **Count Magnolia plants**.
 - A filename or file-picker selection alone does not run inference. The count button starts it.
 - If an original JPEG fails to decode in your browser, upload its recovered crop from local `data/magnolia/images/` instead. The source JPEGs are truncated.
-- If a confidence change seems ineffective, expand Advanced settings and confirm Automatic model detections is selected. Reference boxes intentionally ignore model thresholds.
+- Choose **Automatic model detections** to run the model or **Supplied annotations (reference)** to display available labels for an exact dataset match.
 - For stale assets after deployment, reload the permanent URL. Inference runs locally, but the page, runtime, reference index, and model must finish downloading first.
 
 ## Local preview

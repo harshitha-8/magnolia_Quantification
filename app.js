@@ -1,12 +1,19 @@
 import {letterbox,decode,summarize,referenceBoxes} from './detector-core.js';
 const $=id=>document.getElementById(id);
+const MODEL_CONFIDENCE = 0.15;
+const MODEL_NMS_IOU = 0.45;
 let session,image,rawOutput,boxes=[],summary,filename='image',busy=false,modelReady=false,loadSequence=0;
 let activeReference=null,sourceDimensions=null,selectionSequence=0;
 const referenceIndex=fetch(new URL('./references/annotations.json',location.href)).then(r=>{if(!r.ok)throw new Error('Reference index unavailable');return r.json();}).catch(()=>null);
 const isReference=()=>$('result-source').value==='reference';
 const canvas=$('preview'),ctx=canvas.getContext('2d');
 const status=(message,error=false)=>{$('status').textContent=message;$('status').classList.toggle('error',error);};
-function controls(){ $('analyze').disabled=(!modelReady&&!isReference())||!image||busy;$('file').disabled=busy;$('sample').disabled=busy;$('confidence').disabled=busy||isReference();$('result-source').disabled=busy; }
+function controls() {
+  $('analyze').disabled = (!modelReady && !isReference()) || !image || busy;
+  $('file').disabled = busy;
+  $('sample').disabled = busy;
+  $('result-source').disabled = busy;
+}
 async function init(){
   try{
     if(!globalThis.ort)throw new Error('ONNX runtime could not load. Reload this page.');
@@ -80,16 +87,19 @@ async function loadFile(file){
 }
 function updateResults(){
   if(!image)return;
-  const threshold=Number($('confidence').value)/100;
   if(isReference()&&activeReference)boxes=referenceBoxes(activeReference.boxes,image.naturalWidth,image.naturalHeight);
-  else if(rawOutput)boxes=decode(rawOutput.data,rawOutput.dims,image.naturalWidth,image.naturalHeight,threshold,.45);
+  else if(rawOutput)boxes=decode(rawOutput.data,rawOutput.dims,image.naturalWidth,image.naturalHeight,MODEL_CONFIDENCE,MODEL_NMS_IOU);
   else{boxes=[];$('results').hidden=true;draw();status('Select Count Magnolia plants to run the model.');return;}
   summary=summarize(boxes,image.naturalWidth,image.naturalHeight);
   $('count').textContent=summary.count;$('coverage').textContent=`${summary.boxCoveragePercent.toFixed(1)}%`;
   $('count-label').textContent=isReference()?'Annotated plants':'Plants detected';
   $('source-label').textContent=isReference()?'Annotations displayed':'Result source';
   $('source-value').textContent=isReference()?'100%':'Model';
-  $('result-note').textContent=isReference()?`Supplied annotations: ${boxes.length} of ${activeReference.boxes.length} boxes displayed (100%). These are provided labels, not predictions or a claim of 100% detection accuracy. Box coverage measures rectangles within the recovered region.`:`Automatic detections · ${summary.count===0?'No plants detected at this threshold. Open Advanced detection settings to lower the cutoff.':'Review for missed or repeated plants. Box coverage is the fraction of the image inside plant boxes; it is not accuracy or canopy area.'}`;
+  $('result-note').textContent = isReference()
+    ? `Showing all ${activeReference.boxes.length} supplied annotation boxes in the recovered region. Box coverage measures the combined area of these rectangles.`
+    : summary.count === 0
+      ? 'The model found no Magnolia plants in this image.'
+      : 'Review the boxes for missed plants or duplicate detections. Box coverage is the share of the image inside the boxes, counting overlaps once.';
   $('results').hidden=false;draw();
 }
 async function analyze(){
@@ -106,16 +116,32 @@ async function analyze(){
     tensor=new ort.Tensor('float32',data,[1,3,size,size]);
     const started=performance.now();outputs=await session.run({[session.inputNames[0]]:tensor});
     const output=outputs[session.outputNames[0]];rawOutput={data:Float32Array.from(output.data),dims:[...output.dims]};
-    updateResults();status(`Complete in ${((performance.now()-started)/1000).toFixed(1)} s. Adjust confidence to review the count.`);
+    updateResults();status(`Complete in ${((performance.now()-started)/1000).toFixed(1)} s.`);
   }catch(e){status(`Detection failed: ${e.message}`,true);}finally{tensor?.dispose();if(outputs)Object.values(outputs).forEach(t=>t.dispose());busy=false;controls();}
 }
 function download(blob,suffix){const link=document.createElement('a'),url=URL.createObjectURL(blob);link.href=url;link.download=filename.replace(/\.[^.]+$/,'')+suffix;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
-function report(){return {image:filename,width:image.naturalWidth,height:image.naturalHeight,sourceDimensions,coordinateSpace:'displayed working image; known truncated originals use recovered upper crop resized to 1280px width',resultSource:isReference()?'provided_annotations':'model_predictions',annotationDisplayPercent:isReference()?100:null,model:isReference()?null:'magnolia_detector.onnx',confidenceThreshold:isReference()?null:Number($('confidence').value)/100,nmsIoU:isReference()?null:.45,...summary,units:'pixels; box coverage is union area, not accuracy or canopy area',detections:boxes.map((b,i)=>({id:i+1,label:'Magnolia',...b}))};}
+function report() {
+  const reference = isReference();
+  return {
+    image: filename,
+    width: image.naturalWidth,
+    height: image.naturalHeight,
+    sourceDimensions,
+    coordinateSpace: 'displayed working image; known truncated originals use recovered upper crop resized to 1280px width',
+    resultSource: reference ? 'provided_annotations' : 'model_predictions',
+    annotationDisplayPercent: reference ? 100 : null,
+    model: reference ? null : 'magnolia_detector.onnx',
+    confidenceThreshold: reference ? null : MODEL_CONFIDENCE,
+    nmsIoU: reference ? null : MODEL_NMS_IOU,
+    ...summary,
+    units: 'pixels; box coverage is union area, not accuracy or canopy area',
+    detections: boxes.map((box, index) => ({ id: index + 1, label: 'Magnolia', ...box })),
+  };
+}
 $('file').addEventListener('change',e=>loadFile(e.target.files[0]));
 $('sample').addEventListener('click',async()=>{const selection=++selectionSequence,index=await referenceIndex;if(selection!==selectionSequence)return;await loadImage(new URL('./examples/magnolia-test.jpg',location.href).href,'magnolia-test.jpg',index?.images.find(r=>r.filename==='IMG_1751.jpg')??null,'crop');});
 $('result-source').addEventListener('change',()=>{controls();updateResults();if(isReference())status('All supplied boxes displayed. Reference annotations are not model predictions.');});
 $('analyze').addEventListener('click',analyze);
-$('confidence').addEventListener('input',()=>{$('confidence-value').value=`${$('confidence').value}%`;updateResults();});
 $('dropzone').addEventListener('dragover',e=>{e.preventDefault();$('dropzone').classList.add('dragover');});
 $('dropzone').addEventListener('dragleave',()=>$('dropzone').classList.remove('dragover'));
 $('dropzone').addEventListener('drop',e=>{e.preventDefault();$('dropzone').classList.remove('dragover');loadFile(e.dataTransfer.files[0]);});

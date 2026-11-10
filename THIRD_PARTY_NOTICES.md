@@ -16,4 +16,4 @@ Reference architecture: https://github.com/samvadajainm/mildew-detector. This pr
 - Source: [NC State Extension, Magnolia grandiflora](https://plants.ces.ncsu.edu/plants/magnolia-grandiflora/).
 - Original image: https://eit-planttoolbox-prod.s3.amazonaws.com/media/images/Magnolia-grandiflour_MLOf9yWv0v1P.jpeg
 - License: [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/).
-- Changes: original image bytes retained; the website scales and crops its displayed frame with CSS. This photo is educational profile imagery and is not training data or a model prediction.
+- Changes: original image bytes retained; the website displays the image at its original aspect ratio. This photo is educational profile imagery and is not training data or a model prediction.

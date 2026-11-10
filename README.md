@@ -18,7 +18,7 @@ This is experimental research software with measured limitations. Model predicti
 
 The static deployment follows the [Mildew Detector](https://github.com/samvadajainm/mildew-detector) pattern: a page and ONNX model hosted by GitHub Pages and embeddable in Google Sites.
 
-Upload a JPEG/PNG/WebP or choose the held-out example, then select **Count Magnolia plants**. Adjust the confidence threshold to review detections. Download CSV, JSON, or the annotated image. Photos stay in browser memory; no inference server or API key is required.
+Upload a JPEG/PNG/WebP or choose the held-out example, then select **Count Magnolia plants**. Download CSV, JSON, or the annotated image. Photos stay in browser memory; no inference server or API key is required.
 
 ## Using the published app
 
@@ -26,13 +26,13 @@ Use **https://harshitha-8.github.io/magnolia_Quantification/**, not a previous `
 
 1. Choose a local JPEG, PNG, or WebP, or select the held-out example. Wait for the model-ready message, then choose **Count Magnolia plants**.
 2. Boxes show plant numbers only. Mint boxes identify model predictions; warm gold boxes identify supplied reference annotations. Confidence percentages do not appear beside the boxes or in the main metrics.
-3. **Advanced detection settings** contains the optional confidence filter. Lower values include weaker candidates; higher values suppress them. It changes results immediately after inference. The threshold is not an accuracy percentage, and raising it to 100% would usually hide every detection.
+3. The count button runs automatic detection at the fixed validation-selected cutoff (0.15), recorded in model exports.
 4. For an exact supplied image or a prepared recovered crop, the **Supplied annotations (reference)** option becomes available. It displays every provided box in the recoverable region. The metric **Annotations displayed: 100%** means all those annotation boxes are visible. It is not model confidence, model accuracy, or proof that the annotation itself is exhaustive. It does not represent automatic detection.
 5. CSV and JSON exports explicitly identify `model_predictions` or `provided_annotations`. Reference boxes have no fabricated confidence scores.
 
 Known source files are recognized by SHA-256 content hashes, not filenames. A different or edited image with the same filename never inherits reference annotations. For known truncated originals, the app crops away the damaged lower rows and resizes the recovered region to 1280 pixels wide before prediction or reference display. Exported pixel coordinates refer to that working image, whose dimensions and source dimensions are included in JSON. Unknown images are processed at their original aspect ratio without this dataset-specific crop.
 
-**100% automatic detection is not established.** The measured model errors below remain applicable; displaying every provided annotation cannot improve or replace those evaluation results. Full original image regions that were lost from the supplied JPEGs cannot be recovered by changing a confidence slider.
+**100% automatic detection is not established.** The measured model errors below remain applicable; displaying every provided annotation cannot improve or replace those evaluation results. Evaluation covers the recovered image regions.
 
 ## What quantification means
 
@@ -111,7 +111,7 @@ npm test
 
 Use `--device mps` on supported Apple Silicon or `--device 0` for an NVIDIA GPU. The initial pretrained `yolo11n.pt` is downloaded by Ultralytics. Seeds are fixed, but GPU operations may not be bitwise deterministic. Training refuses to overwrite an existing run directory; choose a new `--project` for another run.
 
-If recalibration on a new dataset selects another cutoff, pass it to evaluation and prediction with `--confidence` and update the slider's initial value in `index.html`. The shipped model uses 0.15.
+If recalibration on a new dataset selects another cutoff, pass it to evaluation and prediction with `--confidence` and update `MODEL_CONFIDENCE` in `app.js`. The shipped model uses 0.15.
 
 ## Batch quantification
 
@@ -141,14 +141,14 @@ Manjunatha, Harshita (2026). Magnolia: Plant detection and quantification
 
 ## Botanical profile & interface
 
-A compact plant-reference note below the demo introduces Southern magnolia (*Magnolia grandiflora* L., family Magnoliaceae) using a credited botanical photograph and facts sourced from [NC State Extension](https://plants.ces.ncsu.edu/plants/magnolia-grandiflora/) and [Oregon State University](https://landscapeplants.oregonstate.edu/plants/magnolia-grandiflora). This educational profile does not establish the species of the dataset plants: the detector has one class, `Magnolia`.
+A plant-reference column below the demo introduces Southern magnolia (*Magnolia grandiflora* L., family Magnoliaceae) using a credited botanical photograph and facts sourced from [NC State Extension](https://plants.ces.ncsu.edu/plants/magnolia-grandiflora/) and [Oregon State University](https://landscapeplants.oregonstate.edu/plants/magnolia-grandiflora). This educational profile does not establish the species of the dataset plants: the detector has one class, `Magnolia`.
 
-Developer attribution appears in two visible places: the introduction and footer. The interface uses readable workspace labels and result notes, a concise method description, and a table of measured test results. The original model and reference-annotation behavior are preserved.
+Developer attribution appears in two visible places: the introduction and footer. The interface uses readable workspace labels and result notes, a plain-language explanation of the method and validation protocol, and a link to the detailed evaluation. The original model and reference-annotation behavior are preserved.
 
 Photo credit and asset provenance are documented in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 ## Research-demo presentation
 
-The page uses a compact project title, developer attribution, direct Code / ONNX / Evaluation / Documentation links, and an interactive image-to-result workspace. The oversized hero, slogans, decorative feature strip, and promotional cards have been removed. The botanical profile is a small reference with expandable details and credits.
+The page uses a compact project title, developer attribution, direct Code / ONNX / Evaluation / Documentation links, and an interactive image-to-result workspace. The oversized hero, slogans, decorative feature strip, and promotional cards have been removed. The plant-reference column displays a full-width photograph with expandable botanical details and credits.
 
 See [DESIGN_REFERENCES.md](DESIGN_REFERENCES.md) for the CVPR, NeurIPS, ACL, and ICLR project pages reviewed for this redesign. Layout code is original; the prototype makes no conference-acceptance or award claim.
