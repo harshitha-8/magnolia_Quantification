@@ -64,6 +64,32 @@ Measured detection and count metrics are in [reports/evaluation.json](reports/ev
 
 **Next improvement:** obtain complete originals, rerun preparation and training, then validate on a separate nursery or flight with known plant counts. The existing model is useful for demonstrating the complete workflow, with manual review of detections.
 
+## YOLO11 and YOLO26 comparison
+
+The browser uses the 30-epoch YOLO11n checkpoint at the validation-selected 0.15 cutoff. On the same held-out images, moving the cutoff to 0.33 increased the mean absolute count error from 2.86 to 3.66 plants per image.
+
+Three pilot runs started from official pretrained checkpoints and used the same split, 640 px inputs, batch size 4, seed 42, and five training epochs. The cutoff for each pilot was selected on validation images before scoring the held-out test set. Predictions used each checkpoint's default Ultralytics inference head, with an IoU threshold of 0.45 for heads that use non-maximum suppression.
+
+| Checkpoint | Training epochs | Confidence cutoff | Mean absolute count error (plants/image) |
+| --- | ---: | ---: | ---: |
+| YOLO11n, deployed | 30 | 0.15 | 2.86 |
+| YOLO11n, pilot | 5 | 0.20 | 3.20 |
+| YOLO11m, pilot | 5 | 0.20 | 3.20 |
+| YOLO26n, pilot | 5 | 0.40 | 5.86 |
+
+YOLO11m had less aggregate count bias than YOLO11n in the pilot and the same average per-image error. YOLO26n overcounted on this split. The pilot compares one short run per checkpoint on recovered regions from a single nursery acquisition. The deployed checkpoint has the lowest measured count error in this comparison.
+
+[Comparison results](reports/model_comparison.json) include count bias and one-to-one box matches at IoU 0.50. The [comparison script](scripts/compare_detectors.py) uses the existing prepared dataset and writes experimental checkpoints to a separate runs directory. Use `yolo11n.pt` and `yolo11m.pt` from the [Ultralytics v8.3.0 assets](https://github.com/ultralytics/assets/releases/tag/v8.3.0), and `yolo26n.pt` from the [v8.4.0 assets](https://github.com/ultralytics/assets/releases/tag/v8.4.0).
+
+```bash
+python scripts/compare_detectors.py \
+  --data data/magnolia/magnolia.yaml \
+  --weights-dir /path/to/pretrained-weights \
+  --work-dir runs/model-comparison \
+  --output reports/model_comparison.json \
+  --device mps
+```
+
 ## Repository layout
 
 | File | Purpose |

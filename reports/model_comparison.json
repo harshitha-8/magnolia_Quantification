@@ -1,0 +1,110 @@
+{
+  "protocol": "Matched pilot, COCO checkpoints, same train/validation/test split. Select each pilot cutoff by validation count MAE only, breaking ties toward higher confidence.",
+  "pilot_epochs": 5,
+  "image_size": 640,
+  "batch": 4,
+  "device": "mps",
+  "seed": 42,
+  "nms_iou": 0.45,
+  "pilots": {
+    "yolo26n": {
+      "seconds": 102.7,
+      "validation": {
+        "images": 35,
+        "confidence": 0.4,
+        "mean_absolute_count_error": 2.2,
+        "mean_count_bias": -0.7142857142857143,
+        "detections": 866,
+        "annotations": 891,
+        "matched_at_iou_0_50": 679,
+        "precision_at_iou_0_50": 0.7840646651270208,
+        "recall_at_iou_0_50": 0.7620650953984287
+      },
+      "test": {
+        "images": 35,
+        "confidence": 0.4,
+        "mean_absolute_count_error": 5.857142857142857,
+        "mean_count_bias": 5.685714285714286,
+        "detections": 714,
+        "annotations": 515,
+        "matched_at_iou_0_50": 324,
+        "precision_at_iou_0_50": 0.453781512605042,
+        "recall_at_iou_0_50": 0.629126213592233
+      }
+    },
+    "yolo11n": {
+      "seconds": 66.5,
+      "validation": {
+        "images": 35,
+        "confidence": 0.2,
+        "mean_absolute_count_error": 1.3428571428571427,
+        "mean_count_bias": -0.08571428571428572,
+        "detections": 888,
+        "annotations": 891,
+        "matched_at_iou_0_50": 708,
+        "precision_at_iou_0_50": 0.7972972972972973,
+        "recall_at_iou_0_50": 0.7946127946127947
+      },
+      "test": {
+        "images": 35,
+        "confidence": 0.2,
+        "mean_absolute_count_error": 3.2,
+        "mean_count_bias": 1.3714285714285714,
+        "detections": 563,
+        "annotations": 515,
+        "matched_at_iou_0_50": 314,
+        "precision_at_iou_0_50": 0.5577264653641207,
+        "recall_at_iou_0_50": 0.6097087378640776
+      }
+    },
+    "yolo11m": {
+      "seconds": 336.2,
+      "validation": {
+        "images": 35,
+        "confidence": 0.2,
+        "mean_absolute_count_error": 1.9428571428571428,
+        "mean_count_bias": 0.4,
+        "detections": 905,
+        "annotations": 891,
+        "matched_at_iou_0_50": 694,
+        "precision_at_iou_0_50": 0.7668508287292818,
+        "recall_at_iou_0_50": 0.7789001122334456
+      },
+      "test": {
+        "images": 35,
+        "confidence": 0.2,
+        "mean_absolute_count_error": 3.2,
+        "mean_count_bias": -0.05714285714285714,
+        "detections": 513,
+        "annotations": 515,
+        "matched_at_iou_0_50": 303,
+        "precision_at_iou_0_50": 0.5906432748538012,
+        "recall_at_iou_0_50": 0.5883495145631068
+      }
+    }
+  },
+  "deployed_yolo11n_30_epochs": [
+    {
+      "images": 35,
+      "confidence": 0.15,
+      "mean_absolute_count_error": 2.857142857142857,
+      "mean_count_bias": 1.7714285714285714,
+      "detections": 577,
+      "annotations": 515,
+      "matched_at_iou_0_50": 331,
+      "precision_at_iou_0_50": 0.5736568457538995,
+      "recall_at_iou_0_50": 0.6427184466019418
+    },
+    {
+      "images": 35,
+      "confidence": 0.33,
+      "mean_absolute_count_error": 3.657142857142857,
+      "mean_count_bias": -3.5428571428571427,
+      "detections": 391,
+      "annotations": 515,
+      "matched_at_iou_0_50": 302,
+      "precision_at_iou_0_50": 0.7723785166240409,
+      "recall_at_iou_0_50": 0.5864077669902913
+    }
+  ]
+}
